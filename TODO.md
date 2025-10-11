@@ -1,10 +1,9 @@
-# TODO: Transform First Page into Component
+# TODO for Updating Raffle App with 37 Students
 
-- [x] Create FirstPage.tsx component in app/components/
-- [x] Move JSX content from App.tsx to FirstPage.tsx
-- [ ] Update App.tsx to import and use FirstPage component
-- [ ] Test the application to ensure it works correctly
+## Plan Breakdown:
+- [ ] Step 1: Update the 'alunos' array in `app/src/components/secondPage.tsx` to include 37 students, each with 50 numbers (total 1-1850), using provided names and placeholder WhatsApp numbers.
+- [ ] Step 2: Update the number input label and placeholder in the form to "1 a 1850".
+- [ ] Step 3: Verify the changes by reviewing the file and suggesting a test (e.g., run the app and test form submission).
+- [ ] Step 4: Mark as complete and notify user.
 
-# TODO: Make layout responsive in SecondPage
-
-- [x] Edit secondPage.tsx to change flex-row to flex-col on small screens, making form go below table when screen is too small
+Next: Proceed to Step 1.
