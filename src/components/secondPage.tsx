@@ -210,7 +210,6 @@ export default function RifaApp() {
             <tr>
               <th className="border border-gray-300 px-3 py-2">Bloco</th>
               <th className="border border-gray-300 px-3 py-2">Nome</th>
-              <th className="border border-gray-300 px-3 py-2">WhatsApp</th>
               <th className="border border-gray-300 px-3 py-2">Faixas (números)</th>
             </tr>
           </thead>
@@ -219,7 +218,6 @@ export default function RifaApp() {
               <tr key={a.bloco} className={`${a.whatsapp ? "" : "bg-gray-100 text-gray-500"}`}>
                 <td className="border border-gray-300 px-3 py-2">{a.bloco}</td>
                 <td className="border border-gray-300 px-3 py-2 text-left">{a.nome}</td>
-                <td className="border border-gray-300 px-3 py-2">{a.whatsapp ? `+${a.whatsapp}` : "—"}</td>
                 <td className="border border-gray-300 px-3 py-2">{a.rangesText}</td>
               </tr>
             ))}
