@@ -163,7 +163,7 @@ export default function RifaApp() {
             value={nomeComprador}
             onChange={(e) => setNomeComprador(e.target.value)}
             className="w-full border px-3 py-2 rounded"
-            placeholder="Seu número"
+            placeholder="Seu nome completo"
             required
           />
         </div>
@@ -175,7 +175,7 @@ export default function RifaApp() {
             value={telefone}
             onChange={(e) => setTelefone(formatPhone(e.target.value))}
             className="w-full border px-3 py-2 rounded"
-            placeholder="(xx) xxxxx-xxxx"
+            placeholder="Seu número"
             required
           />
         </div>
