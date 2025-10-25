@@ -145,7 +145,7 @@ export default function RifaApp() {
 
       <form onSubmit={handleSubmit} className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4 border mb-8">
         <div>
-          <label className="block text-sm font-medium mb-1">Número escolhido:</label>
+          <label className="block text-sm font-medium mb-1">Número escolhido: (1 ate 9750)</label>
           <input
             type="number"
             value={numero}
