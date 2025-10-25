@@ -163,6 +163,7 @@ export default function RifaApp() {
             value={nomeComprador}
             onChange={(e) => setNomeComprador(e.target.value)}
             className="w-full border px-3 py-2 rounded"
+            placeholder="Seu número"
             required
           />
         </div>
