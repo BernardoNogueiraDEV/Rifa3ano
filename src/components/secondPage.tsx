@@ -201,7 +201,7 @@ export default function RifaApp() {
         placeholder="Buscar nome..."
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
-        className="mb-6 w-full max-w-md border border-gray-300 rounded px-4 py-2"
+        className="mb-6 w-full max-w-md border border-gray-300 rounded-2xl px-4 py-2"
       />
 
       <div className="overflow-x-auto w-full max-w-6xl">
