@@ -1,1 +1,0 @@
-- [ ] Add prizes section to SecondPage.tsx after the title, listing the prizes in the specified order.

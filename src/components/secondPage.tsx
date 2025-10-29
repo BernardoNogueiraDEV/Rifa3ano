@@ -1,21 +1,21 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-// Retorna as 4 faixas numéricas (como intervalos start..end) para um bloco
+// ---------- Funções auxiliares ----------
 function gerarRangesDoBloco(bloco: number) {
-  const bases = [1, 2501, 5001, 7501]; // pontos de partida das 4 séries
+  const bases = [1, 2501, 5001, 7501];
   const diff = (bloco - 1) * 50;
-  return bases.map(start => {
+  return bases.map((start) => {
     const s = start + diff;
     return { start: s, end: s + 49 };
   });
 }
 
-// Formata as faixas para exibir na tabela
 function formatarRanges(ranges: { start: number; end: number }[]) {
-  return ranges.map(r => `${r.start}–${r.end}`).join(", ");
+  return ranges.map((r) => `${r.start}–${r.end}`).join(", ");
 }
 
-// Ordem final dos blocos (conforme sua lista) com WhatsApp
+// ---------- Dados ----------
 const blocos = [
   { nome: "AGATHA FANCIELE MEDEIROS MAGALHÃES", whatsapp: "5531999107208" }, // 1
   { nome: "ANA ALICE MOREIRA VIANA", whatsapp: "5531996446055" }, // 2
@@ -64,7 +64,6 @@ const blocos = [
   { nome: "GABRIEL KAIROS CAXEDO PEREIRA PARDINHO (2º BLOCO)", whatsapp: "5531996219396" }, // 45
 ];
 
-// montar lista com ranges reais + exibição
 const alunosComRifas = blocos.map((b, i) => {
   const bloco = i + 1;
   const ranges = gerarRangesDoBloco(bloco);
@@ -72,11 +71,12 @@ const alunosComRifas = blocos.map((b, i) => {
     bloco,
     nome: b.nome,
     whatsapp: b.whatsapp,
-    ranges, // array de {start,end}
+    ranges,
     rangesText: formatarRanges(ranges),
   };
 });
 
+// ---------- Componente principal ----------
 export default function RifaApp() {
   const [numero, setNumero] = useState("");
   const [nomeComprador, setNomeComprador] = useState("");
@@ -84,19 +84,23 @@ export default function RifaApp() {
   const [endereco, setEndereco] = useState("");
   const [busca, setBusca] = useState("");
 
-  // Função para formatar o telefone no formato (xx) xxxxx-xxxx
   const formatPhone = (value: string) => {
-    const cleaned = value.replace(/\D/g, '');
-    if (cleaned.length === 0) return '';
+    const cleaned = value.replace(/\D/g, "");
+    if (cleaned.length === 0) return "";
     if (cleaned.length <= 2) return `(${cleaned}`;
-    if (cleaned.length <= 7) return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
-    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
+    if (cleaned.length <= 7)
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(
+      7,
+      11
+    )}`;
   };
 
-  // encontra dono verificando todas as 4 faixas do bloco
   function encontrarDono(numeroEscolhido: number) {
-    return alunosComRifas.find(a =>
-      a.ranges.some(r => numeroEscolhido >= r.start && numeroEscolhido <= r.end)
+    return alunosComRifas.find((a) =>
+      a.ranges.some(
+        (r) => numeroEscolhido >= r.start && numeroEscolhido <= r.end
+      )
     );
   }
 
@@ -113,39 +117,74 @@ export default function RifaApp() {
       return;
     }
     if (!dono.whatsapp) {
-      alert(`O bloco ${dono.bloco} (${dono.nome}) está sem dono (sem WhatsApp).`);
+      alert(`O bloco ${dono.bloco} (${dono.nome}) está sem dono.`);
       return;
     }
 
     const msg = `Olá, ${dono.nome}! 👋 Meu nome é ${nomeComprador}. Telefone: ${telefone} Endereço: ${endereco} Escolhi o número ${num} da rifa!`;
-
-    const link = `https://api.whatsapp.com/send?phone=+${dono.whatsapp}&text=${encodeURIComponent(msg)}`;
+    const link = `https://api.whatsapp.com/send?phone=+${dono.whatsapp}&text=${encodeURIComponent(
+      msg
+    )}`;
     window.open(link, "_blank");
   }
 
-  const filtrados = alunosComRifas.filter(a =>
+  const filtrados = alunosComRifas.filter((a) =>
     a.nome.toLowerCase().includes(busca.toLowerCase())
   );
 
+  // ---------- JSX ----------
   return (
-    <div className="min-h-screen bg-[#f8f7f1] flex flex-col items-center py-10 px-4">
-      <h1 id="rifa" className="text-3xl font-bold mb-6 text-center">🎟️ Ação Entre Amigos 2025</h1>
+    <div
+      className="min-h-screen flex flex-col items-center py-10 px-4"
+      style={{
+        background: `linear-gradient(180deg, #f8f7f1, #fcbaa1, #f8f7f1)`,
+      }}
+    >
+      {/* Título principal */}
+      <motion.h1
+        id="rifa"
+        className="text-3xl md:text-4xl font-bold mb-6 text-center"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        🎟️ Ação Entre Amigos 2025
+      </motion.h1>
 
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl p-6 mb-8 border">
-        <h2 className="text-2xl font-semibold mb-4 text-center">🏆 Prêmios</h2>
+      {/* Bloco de prêmios */}
+      <motion.div
+        className="w-full max-w-2xl bg-white shadow-lg rounded-xl p-6 mb-8 border border-[#fcbaa1]"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <h2 className="text-2xl font-semibold mb-4 text-center text-[#fcbaa1]">
+          🏆 Prêmios
+        </h2>
         <p className="text-lg mb-4 text-center">Valor da rifa: R$ 10,00</p>
         <ol className="list-decimal list-inside space-y-2 text-lg">
-          <li>prêmio: 01 bicicleta aro 29</li>
-          <li>prêmio: R$ 500,00</li>
-          <li>prêmio: 01 Cesta Básica + 01 Day use na Pousada Alvorada</li>
-          <li>prêmio: 01 Curso de legislação na auto escola cachoeira + 01 cento de empadas c/ 02 refrigerantes</li>
-          <li>prêmio: 01 super cesta de Natal + 01 prêmio surpresa</li>
+          <li>1º prêmio: 01 bicicleta aro 29</li>
+          <li>2º prêmio: R$ 500,00</li>
+          <li>3º prêmio: Cesta Básica + Day use na Pousada Alvorada</li>
+          <li>
+            4º prêmio: Curso de legislação + cento de empadas + 2 refrigerantes
+          </li>
+          <li>5º prêmio: Super cesta de Natal + prêmio surpresa</li>
         </ol>
-      </div>
+      </motion.div>
 
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4 border mb-8">
+      {/* Formulário */}
+      <motion.form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-4 border border-[#fcbaa1] mb-8"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
         <div>
-          <label className="block text-sm font-medium mb-1">Número escolhido: (1 ate 9750)</label>
+          <label className="block text-sm font-medium mb-1">
+            Número escolhido (1 a 9750):
+          </label>
           <input
             type="number"
             value={numero}
@@ -175,7 +214,7 @@ export default function RifaApp() {
             value={telefone}
             onChange={(e) => setTelefone(formatPhone(e.target.value))}
             className="w-full border px-3 py-2 rounded"
-            placeholder="Seu número"
+            placeholder="(31) 99999-9999"
             required
           />
         </div>
@@ -191,41 +230,75 @@ export default function RifaApp() {
           />
         </div>
 
-        <button type="submit" className="w-full bg-[#fcbaa1] text-white py-2 px-4 rounded hover:bg-[#fca686ff]">
+        <motion.button
+          type="submit"
+          className="w-full bg-[#fcbaa1] text-white py-2 px-4 rounded hover:bg-[#fca686] transition-colors"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+        >
           Enviar via WhatsApp
-        </button>
-      </form>
+        </motion.button>
+      </motion.form>
 
-      <input
+      {/* Campo de busca */}
+      <motion.input
         type="text"
         placeholder="Buscar nome..."
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
-        className="mb-6 w-full max-w-md border border-gray-300 rounded-2xl px-4 py-2"
+        className="mb-6 w-full max-w-md border border-gray-300 rounded-2xl px-4 py-2 focus:border-[#fcbaa1] outline-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
       />
 
-      <div className="overflow-x-auto w-full max-w-6xl">
-        <table className="w-full border border-gray-400 text-center text-sm md:text-base">
+      {/* Tabela */}
+      <motion.div
+        className="overflow-x-auto w-full max-w-6xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+      >
+        <table className="w-full border border-gray-400 text-center text-sm md:text-base rounded-lg overflow-hidden">
           <thead className="bg-[#fcbaa1] text-white">
             <tr>
               <th className="border border-gray-300 px-3 py-2">Bloco</th>
               <th className="border border-gray-300 px-3 py-2">Nome</th>
-              <th className="border border-gray-300 px-3 py-2">Faixas (números)</th>
+              <th className="border border-gray-300 px-3 py-2">
+                Faixas (números)
+              </th>
             </tr>
           </thead>
           <tbody>
-            {filtrados.map(a => (
-              <tr key={a.bloco} className={`${a.whatsapp ? "" : "bg-gray-100 text-gray-500"}`}>
+            {filtrados.map((a) => (
+              <motion.tr
+                key={a.bloco}
+                className={`${
+                  a.whatsapp ? "hover:bg-[#fff5f2]" : "bg-gray-100 text-gray-500"
+                } transition-colors`}
+                whileHover={{ scale: 1.01 }}
+              >
                 <td className="border border-gray-300 px-3 py-2">{a.bloco}</td>
-                <td className="border border-gray-300 px-3 py-2 text-left">{a.nome}</td>
-                <td className="border border-gray-300 px-3 py-2">{a.rangesText}</td>
-              </tr>
+                <td className="border border-gray-300 px-3 py-2 text-left">
+                  {a.nome}
+                </td>
+                <td className="border border-gray-300 px-3 py-2">
+                  {a.rangesText}
+                </td>
+              </motion.tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
-      <p className="mt-8 text-gray-500 text-sm">Sorteio em 06/12/2025 — baseado nas milhares da Loteria Federal.</p>
+      <motion.p
+        className="mt-8 text-gray-500 text-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        Sorteio em 06/12/2025 — baseado nas milhares da Loteria Federal.
+      </motion.p>
     </div>
   );
 }
