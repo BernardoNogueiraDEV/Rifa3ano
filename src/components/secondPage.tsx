@@ -162,14 +162,12 @@ export default function RifaApp() {
           🏆 Prêmios
         </h2>
         <p className="text-lg mb-4 text-center">Valor da rifa: R$ 10,00</p>
-        <ol className="list-decimal list-inside space-y-2 text-lg">
-          <li>1º prêmio: 01 bicicleta aro 29</li>
-          <li>2º prêmio: R$ 500,00</li>
-          <li>3º prêmio: Cesta Básica + Day use na Pousada Alvorada</li>
-          <li>
-            4º prêmio: Curso de legislação + cento de empadas + 2 refrigerantes
-          </li>
-          <li>5º prêmio: Super cesta de Natal + prêmio surpresa</li>
+        <ol className="list-decimal list-inside space-y-2 text-lg [&>li]:marker:content-[counter(list-item)'\00a0\00a0']">
+          <li>º prêmio: 01 bicicleta aro 29</li>
+          <li>º prêmio: R$ 500,00</li>
+          <li>º prêmio: Cesta Básica + Day use na Pousada Alvorada</li>
+          <li>º prêmio: Curso de legislação + cento de empadas + 2 refrigerantes</li>
+          <li>º prêmio: Super cesta de Natal + prêmio surpresa</li>
         </ol>
       </motion.div>
 
