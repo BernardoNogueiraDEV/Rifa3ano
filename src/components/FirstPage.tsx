@@ -42,7 +42,8 @@ const FirstPage: React.FC = () => {
           </motion.h1>
 
           <motion.a
-            href="#rifa"
+            href="https://www.instagram.com/3rao_analia/"
+            target="_blank"
             className="text-center mt-6 w-40 py-2 px-4 border border-black rounded-full font-bold text-xs tracking-widest hover:bg-black hover:text-white transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
